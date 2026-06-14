@@ -157,27 +157,27 @@ jobs:
 # TIER 4 — Deploy na EC2
 # ════════════════════════════════════════════════════════
 
-  # deploy:
-  #   name: 🚀 Deploy → EC2
-  #   runs-on: ubuntu-latest
-  #   needs: push
-  #   if: github.event_name == 'push'
-  #   environment: production
+  deploy:
+    name: 🚀 Deploy → EC2
+    runs-on: ubuntu-latest
+    needs: push
+    if: github.event_name == 'push'
+    environment: production
 
-  #   steps:
-  #     - name: Deploy via SSH
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.EC2_HOST }}
-  #         username: ubuntu
-  #         key: ${{ secrets.EC2_SSH_KEY }}
-  #         script: |
-  #           cd ~/app
-  #           aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
-  #             docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-  #           docker compose -f docker-compose.prod.yml pull
-  #           docker compose -f docker-compose.prod.yml up -d --remove-orphans
-  #           docker image prune -f
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/app
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
+              docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+            docker image prune -f
 
 # ════════════════════════════════════════════════════════
 # TIER 5 — Verificação pós-deploy
