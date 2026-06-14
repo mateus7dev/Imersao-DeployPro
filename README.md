@@ -19,6 +19,7 @@ Stack: Node.js + Express · PostgreSQL · HTML/JS · Docker · GitHub Actions
 git clone <url-do-repo>
 cd demo-app
 
+
 # 2. Suba os containers (API + banco + frontend)
 docker compose up
 ```
